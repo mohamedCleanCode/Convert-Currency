@@ -7,7 +7,6 @@ fetch(
     return data;
   })
   .then((currency) => {
-    // console.log(currency.rates);
     let myData = currency.rates;
     let keys = Object.keys(myData);
     allSelect.forEach((select) => {
@@ -17,12 +16,16 @@ fetch(
         option.value = `${keys[i]}`;
         select.appendChild(option);
       }
-      let conTo = document.getElementById("to");
-      let conFor = document.getElementById("for");
-      let selectTo = document.getElementById("select-to");
-      let selectFor = document.getElementById("select-for");
-      conTo.addEventListener("focus", function () {
-        conFor.value = Number(conTo.value) * Number(myData[`${selectFor}`]);
-      });
+    });
+    let conTo = document.getElementById("to");
+    let conFor = document.getElementById("for");
+    let selectTo = document.getElementById("select-to");
+    let selectFor = document.getElementById("select-for");
+    conTo.addEventListener("input", function () {
+      conFor.value =
+        Number(conTo.value) *
+        Number(
+          myData[selectFor.value] / Number(myData[selectTo.value])
+        ).toFixed(3);
     });
   });
